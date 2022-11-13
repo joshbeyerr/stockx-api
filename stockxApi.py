@@ -28,7 +28,13 @@ def calculateWorth(priceInfo):
     else:
         volume = priceInfo['salesNumber']
 
-    if priceInfo['lowestAsk'] != 0 and priceInfo['highestBid'] != 0 and priceInfo['lastSale'] != 0:
+    if (priceInfo['lastSale'] - 30) > priceInfo['lowestAsk']:
+        estimatedPrice = round(((priceInfo['lowestAsk'] + priceInfo['highestBid']) / 2), 2)
+
+    elif (((priceInfo['lowestAsk'] + priceInfo['lastSale'])/2) / 1.6) > priceInfo['highestBid']:
+        estimatedPrice = round(((priceInfo['lowestAsk'] + priceInfo['lastSale']) / 2), 2)
+
+    elif priceInfo['lowestAsk'] != 0 and priceInfo['highestBid'] != 0 and priceInfo['lastSale'] != 0:
         trio = round(((priceInfo['lowestAsk'] + priceInfo['highestBid'] + priceInfo['lastSale']) / 3), 2)
         duo = round(((priceInfo['lowestAsk'] + priceInfo['highestBid']) / 2), 2)
         estimatedPrice = round(((duo + trio) / 2), 2)
